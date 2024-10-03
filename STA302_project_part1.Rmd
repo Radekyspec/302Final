@@ -52,26 +52,24 @@ e^ vs. x
 ```{r}
 par(mfrow=c(2,2))
 
-mod1 <- lm(Sale_Price ~ Bsmt_Unf_SF, data = Housing_data)
-plot(residuals(mod1) ~ Housing_data$Bsmt_Unf_SF, 
+residual_values = resid(fit)
+
+plot(residual_values ~ Housing_data$Bsmt_Unf_SF, 
      main="Residuals versus Unfinished Square Feet of Basement Area",
      xlab="Unfinished Square Feet of Basement Area", ylab="Residuals")
 abline(h=0, col="red", lwd=3, lty=3)
 
-mod2 <- lm(Sale_Price ~ Total_Bsmt_SF, data = Housing_data)
-plot(residuals(mod2) ~ Housing_data$Total_Bsmt_SF, 
+plot(residual_values ~ Housing_data$Total_Bsmt_SF, 
      main="Residuals versus Total Square Feet of Basement Area",
      xlab="Total Square Feet of Basement Area", ylab="Residuals")
 abline(h=0, col="red", lwd=3, lty=3)
 
-mod3 <- lm(Sale_Price ~ Full_Bath, data = Housing_data)
-plot(residuals(mod3) ~ Housing_data$Full_Bath, 
+plot(residual_values ~ Housing_data$Full_Bath, 
      main="Residuals versus Full Bath",
      xlab="Full Bath", ylab="Residuals")
 abline(h=0, col="red", lwd=3, lty=3)
 
-mod4 <- lm(Sale_Price ~ Year_Built, data = Housing_data)
-plot(residuals(mod3) ~ Housing_data$Year_Built, 
+plot(residual_values ~ Housing_data$Year_Built, 
      main="Residuals versus Year Built",
      xlab="Year Built", ylab="Residuals")
 abline(h=0, col="red", lwd=3, lty=3)
@@ -83,9 +81,9 @@ plot(fit, which = 1)
 ```
 
 ```{r}
-residual_values = resid(fit)
+sresidual_values = rstandard(fit)
 par(mfrow=c(1,2))
-hist(residual_values,
+hist(sresidual_values,
      main = "Standardized residuals histogram",
      xlab = "Standardized residuals")
 plot(fit, which = 2)
