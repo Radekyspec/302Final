@@ -12,7 +12,7 @@ We load in the Ames Housing dataset, form the subset, clean the subset.
 # Load the original Ames Housing data
 AmesHousing = read.csv("/Users/lucybai/Documents/UofT/university academy/Forth year F/STA302/STA302 project/AmesHousing.csv", header=T)
 # Subset the data
-subset = AmesHousing[,c(20, 41, 50, 52, 55, 57, 61, 72, 80)]
+subset = AmesHousing[,c(20, 41, 50, 52, 55, 61, 72, 80)]
 # Clean subset
 Housing_data = na.omit(subset)
 summary(Housing_data)
@@ -24,7 +24,7 @@ summary(Housing_data)
 ```
 
 
-Fit the model
+Fit the model with transformed log(sale price)
 ```{r}
 fit = lm(transformed_price ~ Year_Built + Full_Bath + Bedroom_AbvGr 
          + TotRms_AbvGrd + Garage_Cars + Pool_QC + Heating_QC, 
@@ -34,9 +34,9 @@ summary(fit)
 
 
 
-Plot each variable against each other.
+Plot each variable against each othe after transformation.
 ```{r}
-plot(Housing_data[, c(1, 3, 4, 5, 6, 7, 10)], col="cadetblue")
+plot(Housing_data[, c(1, 3, 4, 5, 6, 9)], col="cadetblue")
 ```
 
 
@@ -79,11 +79,6 @@ plot(residual_values ~ Housing_data$TotRms_AbvGrd,
      xlab="Total Rooms Above ground", ylab="Residuals")
 abline(h=0, col="red", lwd=3, lty=3)
 
-plot(residual_values ~ Housing_data$Fireplaces, 
-     main="Residuals versus Fireplaces",
-     xlab="Number of Fireplaces", ylab="Residuals")
-abline(h=0, col="red", lwd=3, lty=3)
-
 plot(residual_values ~ Housing_data$Garage_Cars, 
      main="Residuals versus Garage Car Capacity",
      xlab="Size of Garage in Capacity", ylab="Residuals")
@@ -91,11 +86,12 @@ abline(h=0, col="red", lwd=3, lty=3)
 
 ```
 
-
+e^ vs. y^
 ```{r}
 plot(fit, which = 1)
 ```
 
+Plot the histogram of response variable- sale price. QQ plot is used for checking normality.
 ```{r}
 sresidual_values = rstandard(fit)
 par(mfrow=c(1,2))
@@ -104,4 +100,5 @@ hist(sresidual_values,
      xlab = "Standardized residuals")
 plot(fit, which = 2)
 ```
+
 
